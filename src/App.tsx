@@ -47,6 +47,17 @@ function App() {
         setFilter(filterValue)
      }
 
+     const changeTaskStatus = (idTask: string, taskStatus: boolean) => {
+      // const  task = tasks.find((task) => task.id === idTask)
+      // if (task) {
+      //   task.isDone = taskStatus
+      // }
+      // setTasks([...tasks])
+     
+      const newState = tasks.map((task) => task.id === idTask ? {...task, isDone:taskStatus} : task )
+      setTasks(newState)
+     }
+
     return (
         <div className="App">
             <Todolist
@@ -55,6 +66,8 @@ function App() {
             removeTask={removeTask} 
             changeFilter ={changeFilter}
             addTask = {addTask}
+            changeTaskStatus = {changeTaskStatus}
+            filter={filter}
             />    
         </div>
     );
