@@ -5,10 +5,10 @@ import { Button } from './Button';
 export type TodolistType = {
 title : string,
 tasks: TaskType[],
-removeTask: (taskId: string)=> void,
+removeTask: (todolistId: string, taskId: string)=> void,
 changeFilter: (todolistId:string, filterValue: FilterValuesType) => void,
-addTask: (title: string) => void,
-changeTaskStatus: (idTask: string, value: boolean) => void,
+addTask: (todolistId:string, title: string) => void,
+changeTaskStatus: (todolistId:string, idTask: string, value: boolean) => void,
 filter: FilterValuesType,
 todolistId: string
 }
@@ -19,7 +19,7 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask,change
 
     const addTaskHandler = () => {
         if (taskTitle.trim() !== '') {
-            addTask(taskTitle.trim())
+            addTask(todolistId, taskTitle.trim())
             setTaskTitle('')
         } else {
             setError('Title is required')
@@ -57,12 +57,12 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask,change
                         ( <ul>
                             {tasks.map((task) => {
                                 const removeTaskHandler  = () => {
-                                    removeTask(task.id)  
+                                    removeTask(todolistId,task.id)  
                                 }
 
                                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                                     const newStatusValue = e.currentTarget.checked
-                                    changeTaskStatus(task.id, newStatusValue)
+                                    changeTaskStatus(todolistId, task.id, newStatusValue)
                                   }
 
                                 return (
