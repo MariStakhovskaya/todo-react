@@ -6,13 +6,14 @@ export type TodolistType = {
 title : string,
 tasks: TaskType[],
 removeTask: (taskId: string)=> void,
-changeFilter: (filterValue: FilterValuesType) => void,
+changeFilter: (todolistId:string, filterValue: FilterValuesType) => void,
 addTask: (title: string) => void,
 changeTaskStatus: (idTask: string, value: boolean) => void,
-filter: FilterValuesType
+filter: FilterValuesType,
+todolistId: string
 }
 
-export const Todolist = ({title, tasks, removeTask, changeFilter, addTask,changeTaskStatus, filter}: TodolistType) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter, addTask,changeTaskStatus, filter, todolistId}: TodolistType) => {
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -36,7 +37,7 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask,change
         }}
 
         const changeFilterTasksHandler = (filter: FilterValuesType) => {
-            changeFilter(filter)
+            changeFilter(todolistId, filter)
           }
 
 
