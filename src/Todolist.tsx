@@ -1,11 +1,13 @@
-import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { ChangeEvent} from 'react';
 import { FilterValuesType, TaskType } from './App';
 import { Button } from './Button';
+import { AddItemForm } from './AddItemForm';
 
 export type TodolistType = {
 title : string,
 tasks: TaskType[],
 removeTask: (todolistId: string, taskId: string)=> void,
+removeTodolist: (todolistId: string)=> void,
 changeFilter: (todolistId:string, filterValue: FilterValuesType) => void,
 addTask: (todolistId:string, title: string) => void,
 changeTaskStatus: (todolistId:string, idTask: string, value: boolean) => void,
@@ -13,45 +15,29 @@ filter: FilterValuesType,
 todolistId: string
 }
 
-export const Todolist = ({title, tasks, removeTask, changeFilter, addTask,changeTaskStatus, filter, todolistId}: TodolistType) => {
-    const [taskTitle, setTaskTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
-
-    const addTaskHandler = () => {
-        if (taskTitle.trim() !== '') {
-            addTask(todolistId, taskTitle.trim())
-            setTaskTitle('')
-        } else {
-            setError('Title is required')
-          }
-      }
-
-      const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTaskTitle(event.currentTarget.value)
-      }
-
-      const addTaskOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
-        if (event.key === 'Enter') {
-          addTaskHandler()
-        }}
+export const Todolist = ({title, tasks, removeTask,removeTodolist, changeFilter, addTask,changeTaskStatus, filter, todolistId}: TodolistType) => {
 
         const changeFilterTasksHandler = (filter: FilterValuesType) => {
             changeFilter(todolistId, filter)
           }
 
+         const removeTodolistHandler = () => {
+            removeTodolist(todolistId)
+         }
+
+         const addTaskCallback = (title: string) => {
+            addTask( todolistId, title)
+         }
+
 
     return (
         <div>
             <div>
-                <h3>{title}</h3>
-                    <div>
-                        <input value={taskTitle} className={error ? 'error' : ''} 
-                         onChange={(e) => changeTaskTitleHandler(e)}
-                         onKeyUp={e =>addTaskOnKeyUpHandler(e)} />
-                        <Button title={'+'} onClick={addTaskHandler}/>
-                        {error && <div className={'error-message'}>{error}</div>}
-                    </div>
+            <div className={'todolist-title-container'}>
+        <h3>{title}</h3>
+        <Button title={'x'} onClick={removeTodolistHandler} />
+      </div>
+                    <AddItemForm addItem={addTaskCallback}/>
                     {tasks.length === 0 ? (<p>Тасок нет</p>)
                         :
                         ( <ul>
