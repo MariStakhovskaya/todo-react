@@ -31,7 +31,7 @@ export const EditableSpan = ({value, onChange}:EditableSpanType ) => {
      label="Enter a title"
      variant="outlined"
      value={title}
-     onChange={(e) => changeTitleHandler}
+     onChange={changeTitleHandler}
      onBlur={deactivateEditModeHandler}
      autoFocus
      size='small' />
