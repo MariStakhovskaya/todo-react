@@ -68,7 +68,7 @@ export const tasksReducer = (state:TasksStateType  = initialState , action: Acti
             const stateCopy = {...state};
             const todolistTasks = stateCopy[action.payload.todolistId]
             const newTodolistTasks = todolistTasks.map((task) => task.id === action.payload.taskId ? {...task, isDone:action.payload.isDone} : task )
-            stateCopy[action.payload.todolistId] = newTodolistTasks
+            stateCopy[action.payload.todolistId] = [...newTodolistTasks]
    
           return stateCopy
         }
@@ -77,7 +77,7 @@ export const tasksReducer = (state:TasksStateType  = initialState , action: Acti
             const stateCopy = {...state};
             const todolistTasks = stateCopy[action.payload.todolistId]
             const newTodolistTasks = todolistTasks.map((task) => task.id === action.payload.taskId ? {...task, title:action.payload.title} : task )
-            stateCopy[action.payload.todolistId] = newTodolistTasks
+            stateCopy[action.payload.todolistId] = [...newTodolistTasks]
    
           return stateCopy
         }
